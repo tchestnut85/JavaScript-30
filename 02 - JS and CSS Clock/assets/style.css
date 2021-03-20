@@ -10,9 +10,20 @@ body {
 	margin: 0;
 	font-size: 2rem;
 	display: flex;
+	flex-direction: column;
 	flex: 1;
 	min-height: 100vh;
 	align-items: center;
+	justify-content: center;
+}
+
+.time {
+	color: black;
+	background-color: lightblue;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-size: 6rem;
+	padding: 2rem;
+	border-radius: 5px;
 }
 
 .clock {
