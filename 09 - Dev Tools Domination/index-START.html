@@ -1,46 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Console Tricks!</title>
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Console Tricks!</title>
+	</head>
+	<body>
+		<p onClick="makeGreen()">×BREAK×DOWN×</p>
 
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+		<script>
+			const dogs = [
+				{ name: 'Snickers', age: 2 },
+				{ name: 'hugo', age: 8 },
+			];
 
-  <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+			function makeGreen() {
+				const p = document.querySelector('p');
+				p.style.color = '#BADA55';
+				p.style.fontSize = '50px';
+			}
 
-    function makeGreen() {
-      const p = document.querySelector('p');
-      p.style.color = '#BADA55';
-      p.style.fontSize = '50px';
-    }
+			// Regular
+			console.log('hey listen');
 
-    // Regular
+			// Interpolated
+			console.log('hey %s listen!', 'you');
 
-    // Interpolated
+			// Styled
+			console.log(
+				'%c hey listen ',
+				'font-size: 25px; color: lightblue; background-color: purple; padding: 10px;'
+			);
 
-    // Styled
+			// warning! gives a stack trace to the warning
+			console.warn('hey listen!');
 
-    // warning!
+			// Error :| gives a stack trace to the error
+			console.error('hey listen!');
 
-    // Error :|
+			// Info
+			console.info("hey listen! this one doesn't work???");
 
-    // Info
+			// Testing
+			console.assert(1 === 1, 'incorrect');
+			const p = document.querySelector('p');
+			console.assert(p.classList.contains('test'), 'you didnt select the right element');
 
-    // Testing
+			// clearing
+			// console.clear();
 
-    // clearing
+			// Viewing DOM Elements
+			console.log(p);
+			// .dir show all properties and methods of the element
+			console.dir(p);
 
-    // Viewing DOM Elements
+			// Grouping together
+			dogs.forEach(dog => {
+				console.groupCollapsed(`${dog.name}`);
+				console.log(`this is ${dog.name}`);
+				console.log(`this is ${dog.name} and he is ${dog.age} years old`);
+				console.groupEnd(`${dog.name}`);
+			});
+			// console.table(dogs);
 
-    // Grouping together
+			// counting
+			console.count('Frodo');
+			console.count('Frodo');
+			console.count('Sam');
+			console.count('Frodo');
+			console.count('Sam');
+			console.count('Frodo');
 
-    // counting
+			// timing
+			// console.time('fetching data');
+			// fetch('https://api.github.com/users/tchestnut85')
+			// 	.then(res => res.json())
+			// 	.then(data => {
+			// 		console.timeEnd('fetching data');
+			// 		console.log(data);
+			// 	})
+			// 	.catch(err => console.error(err));
 
-    // timing
-
-  </script>
-</body>
+			const getData = async () => {
+				console.time('getting github data');
+				const data = await fetch('https://api.github.com/users/tchestnut85');
+				const userData = await data.json();
+				console.log(userData);
+				console.timeEnd('getting github data');
+			};
+			getData();
+		</script>
+	</body>
 </html>
