@@ -47,7 +47,7 @@ function scrub(e) {
 
 // Toggle fullscreen video
 function toggleFullscreen() {
-	document.fullscreenElement ? document.exitFullscreen : video.requestFullscreen();
+	document.fullscreenElement ? document.exitFullscreen() : video.requestFullscreen();
 }
 
 // connect event listeners
