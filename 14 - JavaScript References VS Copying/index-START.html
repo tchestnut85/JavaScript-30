@@ -1,56 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS Reference VS Copy</title>
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8" />
+		<title>JS Reference VS Copy</title>
+	</head>
+	<body>
+		<script>
+			// start with strings, numbers and booleans
+			let age = 100;
+			let age2 = age;
+			age = 200;
+			// console.log(age, age2);
 
-  <script>
-    // start with strings, numbers and booleans
+			let dog = 'pug';
+			let dog2 = dog;
+			dog = 'shiba';
+			// console.log(dog, dog2);
 
-    // Let's say we have an array
-    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+			// Let's say we have an array
+			const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
-    // and we want to make a copy of it.
+			// and we want to make a copy of it.
+			const team = players;
+			// console.log(players, team);
 
-    // You might think we can just do something like this:
+			// You might think we can just do something like this:
+			team[3] = 'news';
 
-    // however what happens when we update that array?
+			// however what happens when we update that array?
 
-    // now here is the problem!
+			// now here is the problem!
 
-    // oh no - we have edited the original array too!
+			// oh no - we have edited the original array too!
 
-    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+			// Why? It's because that is an array reference, not an array copy. They both point to the same array!
 
-    // So, how do we fix this? We take a copy instead!
+			// So, how do we fix this? We take a copy instead!
 
-    // one way
+			// make a copy of the array
+			const team2 = players.slice();
+			team2[3] = 'link';
+			// console.log(team, team2);
 
-    // or create a new array and concat the old one in
+			// one way
 
-    // or use the new ES6 Spread
+			// or create a new array and concat the old one in
+			const team3 = [].concat(players);
 
-    // now when we update it, the original one isn't changed
+			// or use the new ES6 Spread
+			const team4 = [...players];
+			team4[1] = 'tom';
+			// console.log(team4);
 
-    // The same thing goes for objects, let's say we have a person object
+			const team5 = Array.from(players);
+			team5[3] = 'yooouuu';
+			// console.log(team5);
 
-    // with Objects
-    const person = {
-      name: 'Wes Bos',
-      age: 80
-    };
+			// now when we update it, the original one isn't changed
 
-    // and think we make a copy:
+			// The same thing goes for objects, let's say we have a person object
 
-    // how do we take a copy instead?
+			// with Objects
+			const person = {
+				name: 'Wes Bos',
+				age: 80,
+			};
 
-    // We will hopefully soon see the object ...spread
+			// and think we make a copy:
+			// const captain = person;
+			// captain.number = 99;
+			// console.log(captain);
+			// console.log(person);
 
-    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+			// how do we take a copy instead?
+			const captain2 = Object.assign({}, person, { age: 30, number: 99 });
+			// console.log(person);
+			// console.log(captain2);
 
-  </script>
+			// ...spread
+			const captain3 = { ...person, age: 40 };
+			// console.log(captain3);
 
-</body>
+			const tom = {
+				name: 'Tom',
+				age: 30,
+				stuff: {
+					gaming: 'Switch',
+					language: 'JavaScript',
+				},
+			};
+			console.log(tom);
+
+			const zelda = Object.assign({}, tom, { name: 'Zelda' });
+			// console.log(zelda);
+
+			const newTom = { ...tom, name: 'tomtom' };
+			// console.log(newTom);
+
+			const tom2 = Object.assign({}, tom);
+			tom2.stuff.gaming = 'PLaystation';
+
+			// poor man's deepclone: --- not recommended to use >D
+			const tom3 = JSON.parse(JSON.stringify(tom));
+			const tomString = JSON.stringify(tom);
+			console.log(tomString);
+			const tomObj = JSON.parse(tomString);
+			console.log(tomObj);
+			// Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+		</script>
+	</body>
 </html>
