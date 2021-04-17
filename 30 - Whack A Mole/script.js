@@ -1,6 +1,9 @@
 const holes = document.querySelectorAll('.hole');
-const scoreBoard = document.querySelector('.score');
+const currentScore = document.querySelector('.score');
+const scoreBoard = document.querySelector('.score-board');
 const moles = document.querySelectorAll('.mole');
+const savedScores = JSON.parse(localStorage.getItem('whack-a-mole scores')) || [];
+
 let lastHole;
 let timeUp;
 let score = 0;
@@ -33,17 +36,30 @@ function peep() {
 
 function startGame() {
 	score = 0;
-	scoreBoard.textContent = 0;
+	currentScore.textContent = 0;
 	timeUp = false;
 	peep();
-	setTimeout(() => (timeUp = true), 10000);
+	setTimeout(() => {
+		timeUp = true;
+		saveScores();
+	}, 2000);
+}
+
+function saveScores() {
+	const name = window.prompt('To save your score, enter your name.');
+	const currentScore = { name, score };
+
+	if (name) {
+		savedScores.push(currentScore);
+		localStorage.setItem('whack-a-mole scores', JSON.stringify(savedScores));
+	}
 }
 
 function bonk(e) {
 	if (!e.isTrusted) return;
 	score++;
 	this.classList.remove('up');
-	scoreBoard.textContent = score;
+	currentScore.textContent = score;
 }
 
 moles.forEach(mole => mole.addEventListener('click', bonk));
